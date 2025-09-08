@@ -1,6 +1,7 @@
 package com.Bank.repository;
 
 import com.Bank.entity.User;
+import com.Bank.services.UserService;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,7 @@ public class UserRepo {
     private static Set<User> userSet = new HashSet<>();
 
     static {
-        User admin = new User("Admin","admin","12345","admin",0);
+        User admin = new User("admin","admin","12345","admin",0);
         User user1 = new User("user1","user1","12344","user",1000);
         User user2 = new User("user2","user2","123456","user",2000);
         User user3 = new User("user2","user2","123456","user",2000);
@@ -36,5 +37,21 @@ public class UserRepo {
        else{
            return null;
        }
+    }
+    public boolean AccCreation(String name,String pass,String number){
+        User user = new User(name,pass,number,"user",500);
+        return userSet.add(user);
+    }
+    public Double checkBankBalance(String username){
+        List<User> finalList = userSet.stream()
+                .filter(user -> user.getName().equals(username))
+                .collect(Collectors.toList());
+
+        if(!finalList.isEmpty()){
+            return finalList.get(0).getBalance();
+        }
+        else{
+            return null;
+        }
     }
 }
