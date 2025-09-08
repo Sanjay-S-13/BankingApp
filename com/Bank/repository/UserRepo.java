@@ -54,4 +54,38 @@ public class UserRepo {
             return null;
         }
     }
+
+    public User getUser(String userid){
+        List<User> userResult = userSet.stream()
+                .filter(user -> user.getName().equals(userid))
+                .collect(Collectors.toList());
+
+        if(!userResult.isEmpty()){
+            return userResult.get(0);
+        }
+        return null;
+    }
+
+    public boolean moneyTransfer(String payeeName , String recName , Double amount){
+        boolean isdebit = debit(payeeName,amount);
+        boolean iscredit = credit(recName,amount);
+        return isdebit && iscredit;
+
+    }
+    public boolean debit(String payeeName,Double amount){
+        User user = getUser(payeeName);
+        Double accBalance = user.getBalance();
+        userSet.remove(user);
+        Double finalBalance = accBalance-amount;
+        user.setBalance(finalBalance);
+        return userSet.add(user);
+    }
+    public boolean credit(String RecName,Double amount){
+        User user = getUser(RecName);
+        Double accBalance = user.getBalance();
+        userSet.remove(user);
+        Double finalBalance = accBalance+amount;
+        user.setBalance(finalBalance);
+        return userSet.add(user);
+    }
 }

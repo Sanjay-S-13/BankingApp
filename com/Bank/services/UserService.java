@@ -18,5 +18,11 @@ public class UserService {
     public Double checkBankBalance(String name){
         return userobj.checkBankBalance(name);
     }
+    public User getUser(String userId){
+        return userobj.getUser(userId);
+    }
+    public boolean moneyTransfer(String payeeName , String recName , Double amount){
+        return userobj.moneyTransfer(payeeName,recName,amount);
+    }
 }
 
