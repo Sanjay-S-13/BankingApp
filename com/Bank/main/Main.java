@@ -3,6 +3,8 @@ package com.Bank.main;
 import com.Bank.entity.User;
 import com.Bank.services.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -40,6 +42,8 @@ public class Main {
         while(flag){
         System.out.println("1.logout/Signout");
         System.out.println("2.To Add New Customer");
+        System.out.println("3.To See Customer Transaction Details");
+        System.out.println("4.To Check Bank Balance");
         int n = x.nextInt();
         switch (n) {
             case 1:
@@ -48,6 +52,17 @@ public class Main {
                 break;
             case 2:
                 main.AccountCreation();
+                break;
+            case 3:
+                System.out.println("Enter Customer Id");
+                String name = x.next();
+                main.toPrintTransactionHistory(name);
+                break;
+            case 4:
+                System.out.println("Enter Customer Id");
+                String customerName = x.next();
+                Double ans = main.checkBankBalance(customerName);
+                System.out.println("Your Customer Bank balance is: "+ans);
                 break;
             default:
                 System.out.println("Wrong choice");
@@ -62,6 +77,7 @@ public class Main {
             System.out.println("2.To Check Balance");
             System.out.println("3.To Transfer Amount");
             System.out.println("4.To Check Transaction History");
+            System.out.println("5.For Applying Cheque Book");
             int n = x.nextInt();
             switch (n) {
                 case 1:
@@ -76,6 +92,19 @@ public class Main {
                     break;
                 case 4:
                     main.toPrintTransactionHistory(name);
+                    break;
+                case 5:
+                    Map<String ,Boolean> map = main.getAllapplyingChequeBook(name);
+                    if(map.containsKey(name) && map.get(name)){
+                        System.out.println("You have already had a ChequeBook");
+                    }
+                    else if (map.containsKey(name) && !map.get(name)){
+                        System.out.println("You already submitted ... Please wait for a Request");
+                    }
+                    else {
+                        main.applyingChequeBook(name);
+                        System.out.println("Cheque Book applied Successfully");
+                    }
                     break;
                 default:
                     System.out.println("Wrong choice");
@@ -141,5 +170,11 @@ public class Main {
     }
     private void toPrintTransactionHistory(String name){
             obj.toPrintTransactionHistory(name);
+    }
+    private void applyingChequeBook(String name){
+        obj.applyingChequeBook(name);
+    }
+    private Map<String, Boolean> getAllapplyingChequeBook(String name){
+        return obj.getAllapplyingChequeBook(name);
     }
 }

@@ -3,6 +3,8 @@ package com.Bank.services;
 import com.Bank.entity.User;
 import com.Bank.repository.UserRepo;
 
+import java.util.Map;
+
 public class UserService {
     private UserRepo userobj = new UserRepo();
 
@@ -26,6 +28,12 @@ public class UserService {
     }
     public void toPrintTransactionHistory(String name){
         userobj.toPrintTransactionHistory(name);
+    }
+    public void applyingChequeBook(String name){
+        userobj.applyingChequeBook(name);
+    }
+    public Map<String,Boolean> getAllapplyingChequeBook(String name){
+        return userobj.getAllapplyingChequeBook(name);
     }
 }
 

@@ -5,15 +5,14 @@ import com.Bank.entity.User;
 import com.Bank.services.UserService;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserRepo {
     private static Set<User> userSet = new HashSet<>();
     private static List<Transactions> transactionsList = new ArrayList<>();
+    Map<String , Boolean> chequeList = new HashMap<>();
+
     static {
         User admin = new User("admin","admin","12345","admin",0);
         User user1 = new User("s","s","13","user",10000);
@@ -84,8 +83,8 @@ public class UserRepo {
 
         Transactions transaction = new Transactions(
                 LocalDate.now(),
-                recName,
                 payeeName,
+                recName,
                 accBalance,
                 finalBalance
                 );
@@ -111,18 +110,25 @@ public class UserRepo {
 
     public void toPrintTransactionHistory(String name){
         List<Transactions> UserTransaction = transactionsList.stream()
-                .filter(transactions -> transactions.getTransactionPerformedBy().equals(name))
+                .filter(transactions -> transactions.getTransactionUserId().equals(name))
                 .collect(Collectors.toList());
 
         for (Transactions t:UserTransaction){
+            System.out.println("Date "+"\t"+"\t"+"UserID "+"\t"+"\t"+"\t"+"Before Amount "+"\t"+"\t"+"Final Amount "+"\t"+"\t");
             System.out.println("----------------------------------------------------");
-            System.out.println("Date "+"\t"+"\t"+"UserID "+"\t"+"\t"+"PerformedBy "+"\t"+"\t"+"Before Amount "+"\t"+"\t"+"Final Amount "+"\t"+"\t");
             System.out.println(t.getTransactionDate()
                     +"\t"+"\t" + t.getTransactionUserId()
-                    +"\t"+"\t" + t.getTransactionPerformedBy()
-                    +"\t"+"\t" + t.getBeforeAmount()
-                    +"\t"+"\t" + t.getFinalAmount());
+                    +"\t"+"\t"+"\t" + t.getBeforeAmount()
+                    +"\t"+"\t"+"\t" + t.getFinalAmount());
             System.out.println("----------------------------------------------------");
         }
     }
+    public void applyingChequeBook(String name){
+            chequeList.put(name,false);
+    }
+    public Map<String,Boolean> getAllapplyingChequeBook(String name){
+        return chequeList;
+    }
+
+
 }
