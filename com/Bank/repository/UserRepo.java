@@ -114,12 +114,12 @@ public class UserRepo {
                 .collect(Collectors.toList());
 
         for (Transactions t:UserTransaction){
-            System.out.println("Date "+"\t"+"\t"+"UserID "+"\t"+"\t"+"\t"+"Before Amount "+"\t"+"\t"+"Final Amount "+"\t"+"\t");
+            System.out.println("Date\t\tUserID\t\tBefore Amount\tFinal Amount");
             System.out.println("----------------------------------------------------");
             System.out.println(t.getTransactionDate()
-                    +"\t"+"\t" + t.getTransactionUserId()
-                    +"\t"+"\t"+"\t" + t.getBeforeAmount()
-                    +"\t"+"\t"+"\t" + t.getFinalAmount());
+                    + "\t" + t.getTransactionUserId()
+                    + "\t" + t.getBeforeAmount()
+                    + "\t\t" + t.getFinalAmount());
             System.out.println("----------------------------------------------------");
         }
     }
@@ -129,6 +129,18 @@ public class UserRepo {
     public Map<String,Boolean> getAllapplyingChequeBook(String name){
         return chequeList;
     }
-
-
+    public List<String> getChequeBookLists(){
+        List<String> userIds = new ArrayList<>();
+        for(Map.Entry<String,Boolean>entry : chequeList.entrySet()){
+            if(!entry.getValue()){
+                userIds.add(entry.getKey());
+            }
+        }
+        return userIds;
+    }
+    public void approvalOfCheque(String name) {
+        if (chequeList.containsKey(name)) {
+            chequeList.put(name,true);
+        }
+    }
 }

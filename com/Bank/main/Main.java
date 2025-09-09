@@ -4,6 +4,7 @@ import com.Bank.entity.User;
 import com.Bank.services.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -44,11 +45,12 @@ public class Main {
         System.out.println("2.To Add New Customer");
         System.out.println("3.To See Customer Transaction Details");
         System.out.println("4.To Check Bank Balance");
+        System.out.println("5.To View chequeBook Requests");
         int n = x.nextInt();
         switch (n) {
             case 1:
                 flag = false;
-                System.out.println("1.Sign-out successfully");
+                System.out.println("Sign-out successfully");
                 break;
             case 2:
                 main.AccountCreation();
@@ -64,11 +66,21 @@ public class Main {
                 Double ans = main.checkBankBalance(customerName);
                 System.out.println("Your Customer Bank balance is: "+ans);
                 break;
+            case 5:
+                List<String > list = main.getChequeBookLists();
+                System.out.println(list);
+                System.out.println("Please select the One from the above List: ");
+                String user = x.next();
+                main.approvalOfCheque(user);
+                break;
             default:
                 System.out.println("Wrong choice");
         }
         }
     }
+
+
+
     private static void UserWorkings(String name){
         System.out.println("___User Account___");
         boolean flag = true;
@@ -176,5 +188,11 @@ public class Main {
     }
     private Map<String, Boolean> getAllapplyingChequeBook(String name){
         return obj.getAllapplyingChequeBook(name);
+    }
+    private List<String> getChequeBookLists(){
+        return obj.getChequeBookLists();
+    }
+    private void approvalOfCheque(String name) {
+        obj.approvalOfCheque(name);
     }
 }
