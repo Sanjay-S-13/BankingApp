@@ -1,10 +1,10 @@
-# 🏦 Banking System Application
+#  Banking System Application
 
 This is a robust and professional console-based banking system developed in Java. The application is designed to simulate core banking functionalities for both administrators and general users. It leverages modern Java concepts and a layered architecture to ensure a clean, maintainable, and scalable codebase.
 
 ---
 
-## 🚀 Features
+##  Features
 
 ### Admin Privileges
 - **Customer Management:** Admins can easily add new customer accounts to the system.
@@ -19,7 +19,7 @@ This is a robust and professional console-based banking system developed in Java
 
 ---
 
-## 🛠️ Technical Concepts
+##  Technical Concepts
 
 This project showcases several professional software development concepts, including:
 
@@ -36,7 +36,7 @@ This project showcases several professional software development concepts, inclu
 ---
 
 
-## 📞 Contact
+##  Contact
 
 For any questions or professional inquiries, please feel free to connect with me:
 
