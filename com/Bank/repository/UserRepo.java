@@ -1,8 +1,11 @@
 package com.Bank.repository;
 
+import com.Bank.entity.Transactions;
 import com.Bank.entity.User;
 import com.Bank.services.UserService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,12 +13,12 @@ import java.util.stream.Collectors;
 
 public class UserRepo {
     private static Set<User> userSet = new HashSet<>();
-
+    private static List<Transactions> transactionsList = new ArrayList<>();
     static {
         User admin = new User("admin","admin","12345","admin",0);
-        User user1 = new User("user1","user1","12344","user",1000);
-        User user2 = new User("user2","user2","123456","user",2000);
-        User user3 = new User("user2","user2","123456","user",2000);
+        User user1 = new User("s","s","13","user",10000);
+        User user2 = new User("d","d","29","user",20000);
+        User user3 = new User("r","r","1","user",30000);
         userSet.add(admin);
         userSet.add(user1);
         userSet.add(user2);
@@ -67,25 +70,59 @@ public class UserRepo {
     }
 
     public boolean moneyTransfer(String payeeName , String recName , Double amount){
-        boolean isdebit = debit(payeeName,amount);
-        boolean iscredit = credit(recName,amount);
+        boolean isdebit = debit(payeeName,amount,recName);
+        boolean iscredit = credit(recName,amount,payeeName);
         return isdebit && iscredit;
 
     }
-    public boolean debit(String payeeName,Double amount){
+    public boolean debit(String payeeName,Double amount , String recName){
         User user = getUser(payeeName);
         Double accBalance = user.getBalance();
         userSet.remove(user);
         Double finalBalance = accBalance-amount;
         user.setBalance(finalBalance);
+
+        Transactions transaction = new Transactions(
+                LocalDate.now(),
+                recName,
+                payeeName,
+                accBalance,
+                finalBalance
+                );
+        transactionsList.add(transaction);
         return userSet.add(user);
     }
-    public boolean credit(String RecName,Double amount){
-        User user = getUser(RecName);
+    public boolean credit(String recName,Double amount,String PayeeName){
+        User user = getUser(recName);
         Double accBalance = user.getBalance();
         userSet.remove(user);
         Double finalBalance = accBalance+amount;
         user.setBalance(finalBalance);
+        Transactions transaction = new Transactions(
+                LocalDate.now(),
+                recName,
+                PayeeName,
+                accBalance,
+                finalBalance
+        );
+        transactionsList.add(transaction);
         return userSet.add(user);
+    }
+
+    public void toPrintTransactionHistory(String name){
+        List<Transactions> UserTransaction = transactionsList.stream()
+                .filter(transactions -> transactions.getTransactionPerformedBy().equals(name))
+                .collect(Collectors.toList());
+
+        for (Transactions t:UserTransaction){
+            System.out.println("----------------------------------------------------");
+            System.out.println("Date "+"\t"+"\t"+"UserID "+"\t"+"\t"+"PerformedBy "+"\t"+"\t"+"Before Amount "+"\t"+"\t"+"Final Amount "+"\t"+"\t");
+            System.out.println(t.getTransactionDate()
+                    +"\t"+"\t" + t.getTransactionUserId()
+                    +"\t"+"\t" + t.getTransactionPerformedBy()
+                    +"\t"+"\t" + t.getBeforeAmount()
+                    +"\t"+"\t" + t.getFinalAmount());
+            System.out.println("----------------------------------------------------");
+        }
     }
 }

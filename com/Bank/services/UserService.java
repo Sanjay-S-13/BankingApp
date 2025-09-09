@@ -24,5 +24,8 @@ public class UserService {
     public boolean moneyTransfer(String payeeName , String recName , Double amount){
         return userobj.moneyTransfer(payeeName,recName,amount);
     }
+    public void toPrintTransactionHistory(String name){
+        userobj.toPrintTransactionHistory(name);
+    }
 }
 

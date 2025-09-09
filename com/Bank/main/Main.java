@@ -61,6 +61,7 @@ public class Main {
             System.out.println("1.logout/Signout");
             System.out.println("2.To Check Balance");
             System.out.println("3.To Transfer Amount");
+            System.out.println("4.To Check Transaction History");
             int n = x.nextInt();
             switch (n) {
                 case 1:
@@ -72,6 +73,9 @@ public class Main {
                     break;
                 case 3:
                     main.AmountTransfer(name);
+                    break;
+                case 4:
+                    main.toPrintTransactionHistory(name);
                     break;
                 default:
                     System.out.println("Wrong choice");
@@ -98,22 +102,20 @@ public class Main {
         return obj.checkBankBalance(name);
     }
     private void AmountTransfer(String name){
-        System.out.println("Enter Payee Id: ");
-        String user = x.next();
-        User payeeUser = getUser(user);
-        if(payeeUser!=null){
+        System.out.println("Enter the Receiver Id: ");
+        String rec = x.next();
+        User recUser = getUser(rec);
+        if(recUser!=null){
             System.out.println("Enter the Amount for Transfer: ");
             double sendingAmount = x.nextInt();
-            System.out.println("Enter the Receiver Id: ");
-            String rec = x.next();
-            User recUser = getUser(rec);
+
             String recUserName = recUser.getName();
 
             double Balanceamount = checkBankBalance(name);
 
-            String pUser = payeeUser.getName();
+
             if(Balanceamount >= sendingAmount){
-                boolean sol = moneyTransfer(pUser,recUserName,sendingAmount);
+                boolean sol = moneyTransfer(name,recUserName,sendingAmount);
                 if(sol){
                     System.out.println("Successfully Transferred");
                 }
@@ -136,5 +138,8 @@ public class Main {
     }
     private boolean moneyTransfer(String payeeName , String recName , Double amount){
         return obj.moneyTransfer(payeeName,recName,amount);
+    }
+    private void toPrintTransactionHistory(String name){
+            obj.toPrintTransactionHistory(name);
     }
 }
