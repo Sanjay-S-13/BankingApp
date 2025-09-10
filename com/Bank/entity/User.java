@@ -14,6 +14,7 @@ public class User {
         this.password = password;
         this.contactNumber = contactNumber;
         this.role = role;
+
         this.balance = balance;
     }
 
